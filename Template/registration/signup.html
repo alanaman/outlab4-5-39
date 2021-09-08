@@ -3,6 +3,8 @@
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
+<span style="padding-left:600px;"></span><a href="{% url 'login' %}">Log In</a>
+<span style="padding-left:100px;"></span><a href="{% url 'signup' %}">Sign Up</a></p>
   <h2>Sign up</h2>
   <form method="post">
     {% csrf_token %}

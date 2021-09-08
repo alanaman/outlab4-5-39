@@ -8,7 +8,7 @@
   Hi {{ user.username }}!
   <p><a href="{% url 'logout' %}">Log Out</a></p>
 {% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">Log In</a>
+  <span style="padding-left:600px;"></span><a href="{% url 'login' %}">Log In</a>
+  <span style="padding-left:100px;"></span><a href="{% url 'signup' %}">Sign Up</a>
 {% endif %}
 {% endblock %}

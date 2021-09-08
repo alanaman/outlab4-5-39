@@ -4,8 +4,10 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<h2>Log In</h2>
-<form method="post">
+<span style="padding-left:600px;"></span><a href="{% url 'login' %}">Log In</a>
+<span style="padding-left:100px;"></span><a href="{% url 'signup' %}">Sign Up</a></p>
+</span><h2><span style="padding-left:673px;"></span>Log In</h2>
+<form method="post"></span>
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit">Log In</button>
