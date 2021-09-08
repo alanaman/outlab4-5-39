@@ -5,8 +5,10 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-  Hi {{ user.username }}!
-  <p><a href="{% url 'logout' %}">Log Out</a></p>
+<span style="padding-left:530px;"></span><a href="{% url 'profiles' %}">Profile</a>
+<span style="padding-left:100px;"></span><a href="{% url 'explore' %}">Explore</a>
+<span style="padding-left:100px;"></span><a href="{% url 'logout' %}">Log Out</a>
+</p>Hi {{ user.username }}!<p></p>
 {% else %}
   <span style="padding-left:600px;"></span><a href="{% url 'login' %}">Log In</a>
   <span style="padding-left:100px;"></span><a href="{% url 'signup' %}">Sign Up</a>

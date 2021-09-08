@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <span style="padding-left:600px;"></span><a href="{% url 'profiles' %}">Profile</a>
+    <span style="padding-left:100px;"></span><a href="{% url 'explore' %}">Explore</a>
+    <span style="padding-left:100px;"></span><a href="{% url 'logout' %}">Log Out</a>
+</p>This is ur gitprofile<p></p>
+{% endif %}
+{% endblock %}
