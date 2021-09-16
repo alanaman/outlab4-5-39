@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from accounts.models import UserProfile
+# from accounts.models import Profile
 from django.contrib.auth.models import User
 
 
