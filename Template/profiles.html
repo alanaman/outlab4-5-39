@@ -7,9 +7,12 @@
     <span style="padding-left:500px;"></span><a href="{% url 'profiles' user.id  %}">My Profile</a>
     <span style="padding-left:100px;"></span><a href="{% url 'explore' %}">Explore</a>
     <span style="padding-left:100px;"></span><a href="{% url 'logout' %}">Log Out</a>
-<!-- </p>{{all}}<p></p> -->
-{% for item in all %}
-</p>this is {{item.id}}<p></p>
+
+<h1>{{usertoshow.first_name}} {{usertoshow.last_name}} (@{{usertoshow.username}})</h1>
+<p>Profile last updated: {{datetime}}</p>
+<b></p>Followers {{usertoshow.profile.Followers}}<p></p></b>
+{% for item in repostoshow %}
+</p>♦{{item.name}} - {{item.star_count}} stars<p></p>
 
 
 {% endfor %}
