@@ -10,6 +10,9 @@
 
 <h1>{{usertoshow.first_name}} {{usertoshow.last_name}} (@{{usertoshow.username}})</h1>
 <p>Profile last updated: {{datetime}}</p>
+{% ifequal usertoshow.id user.id %}
+<a href="{% url 'update' user.id  %}">Update Now</a>
+{% endifequal %}
 <b></p>Followers {{usertoshow.profile.Followers}}<p></p></b>
 {% for item in repostoshow %}
 </p>♦{{item.name}} - {{item.star_count}} stars<p></p>

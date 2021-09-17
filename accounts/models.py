@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.utils import timezone
-from datetime import datetime
+from datetime import date, datetime
 import requests
 
 
@@ -16,11 +16,9 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         P=Profile.objects.create(user=instance)
         U=User.objects.get(id=P.user_id)
-        # print(U.username)
         URL='https://api.github.com/users/'+str(U.username)
         response=requests.get(URL)
-        dict=response.json()
-        
+        dict=response.json()        
         P.Followers = dict['followers']
         instance.profile.save()
 
@@ -48,3 +46,29 @@ def create_repos(sender, instance, created, **kwargs):
             R.save()
 
 post_save.connect(create_repos, sender=User)
+
+def update_user_profile(id):
+    P=Profile.objects.get(user_id=id)
+    U=User.objects.get(id=P.user_id)
+    URL='https://api.github.com/users/'+str(U.username)
+    response=requests.get(URL)
+    dict=response.json()    
+    P.Followers = dict['followers']
+    P.last_update = datetime.now()
+    P.save()
+
+def update_repos(id):
+    Repository.objects.filter(profile_id=id).delete()
+    P=Profile.objects.get(user_id=id)
+    U=User.objects.get(id=P.user_id)
+    URL='https://api.github.com/users/'+str(U.username)+'/repos'
+    response=requests.get(URL)
+    dict=response.json()
+    for repo in dict:
+        QS=Repository.objects.filter(name=repo['name'],profile_id=id)
+        if not QS:
+            R=Repository.objects.create(profile_id=id)
+            R.name=repo['name']
+            R.star_count=repo['stargazers_count']
+            R.owner=repo['owner']['login']
+            R.save()

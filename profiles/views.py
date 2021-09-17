@@ -2,9 +2,13 @@
 from django.shortcuts import render
 # from accounts.models import Profile
 from django.contrib.auth.models import User
-from accounts.models import Profile
-from accounts.models import Repository
+from accounts.models import (Profile,
+                                Repository,
+                                update_user_profile,
+                                update_repos)
+Repository
 from datetime import datetime
+from django.shortcuts import redirect
 
 
 def show_profile(request, userid):
@@ -21,3 +25,8 @@ def show_profile(request, userid):
             'user':request.user,
             'all':all_members}
     return render(request, 'profiles.html',args)
+
+def update_profile(request, userid):
+    update_user_profile(userid)
+    update_repos(userid)
+    return redirect('profiles',userid=userid)
