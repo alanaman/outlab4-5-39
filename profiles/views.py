@@ -17,7 +17,7 @@ def show_profile(request, userid):
     prof= Profile.objects.get(user_id=userid)
     repo = Repository.objects.filter(profile_id=userid)
     k=prof.last_update
-    dt=datetime.strptime(k,"%Y-%m-%d %H:%M:%S.%f")
+    dt=datetime.strftime(k,"%b %d, %Y, %-I:%M %p")
     args={'usertoshow':user,
             'repostoshow':repo,
             'profiletoshow':prof,
