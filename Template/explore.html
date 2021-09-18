@@ -9,7 +9,7 @@
     <span style="padding-left:100px;"></span><a href="{% url 'logout' %}">Log Out</a></p>
 
 {% for item in all %}
-    <a><b>•</b></a><span style="padding-left:100px;"></span><a href="{% url 'profiles' item.id %}">{{item.username}}</a></p>
+    <span style="padding-left:100px;"><a><b>•</b></a></span><a href="{% url 'profiles' item.id %}">{{item.username}}</a></p>
     
 
 {% endfor %}
