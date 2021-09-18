@@ -23,9 +23,6 @@ def create_user_profile(sender, instance, created, **kwargs):
         except:
             dict={}
             dict['followers']=0
-        finally:
-            if (dict['message']=="Not Found"):
-                dict['followers']=0
         P.Followers = dict['followers']
         instance.profile.save()
 
@@ -47,9 +44,6 @@ def create_repos(sender, instance, created, **kwargs):
         dict=response.json()
     except:
         dict={}
-    finally:
-        if (dict['message']=="Not Found"):
-            dict=[]
     
     for repo in dict:
         QS=Repository.objects.filter(name=repo['name'],profile=instance)
@@ -71,10 +65,7 @@ def update_user_profile(id):
         dict=response.json()
     except:
         dict={}
-        dict['followers']=0
-    finally:
-        if (dict['message']=="Not Found"):
-            dict['followers']=0    
+        dict['followers']=0  
     P.Followers = dict['followers']
     P.last_update = datetime.now()
     P.save()
@@ -89,9 +80,6 @@ def update_repos(id):
         dict=response.json()
     except:
         dict={}
-    finally:
-        if (dict['message']=="Not Found"):
-            dict=[]
     for repo in dict:
         QS=Repository.objects.filter(name=repo['name'],profile_id=id)
         if not QS:
