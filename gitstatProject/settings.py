@@ -80,8 +80,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'gitstatDB',
-        'USER': 'postgres',
-        'PASSWORD': '112114',
+        'USER': config('USER'),
+        'PASSWORD': config('PASSWORD'),
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }

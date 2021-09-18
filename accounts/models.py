@@ -17,8 +17,15 @@ def create_user_profile(sender, instance, created, **kwargs):
         P=Profile.objects.create(user=instance)
         U=User.objects.get(id=P.user_id)
         URL='https://api.github.com/users/'+str(U.username)
-        response=requests.get(URL)
-        dict=response.json()        
+        try:
+            response=requests.get(URL)
+            dict=response.json()
+        except:
+            dict={}
+            dict['followers']=0
+        finally:
+            if (dict['message']=="Not Found"):
+                dict['followers']=0
         P.Followers = dict['followers']
         instance.profile.save()
 
@@ -34,8 +41,16 @@ def create_repos(sender, instance, created, **kwargs):
     P=Profile.objects.get(user=instance)
     U=User.objects.get(id=P.user_id)
     URL='https://api.github.com/users/'+str(U.username)+'/repos'
-    response=requests.get(URL)
-    dict=response.json()
+    
+    try:
+        response=requests.get(URL)
+        dict=response.json()
+    except:
+        dict={}
+    finally:
+        if (dict['message']=="Not Found"):
+            dict=[]
+    
     for repo in dict:
         QS=Repository.objects.filter(name=repo['name'],profile=instance)
         if not QS:
@@ -51,8 +66,15 @@ def update_user_profile(id):
     P=Profile.objects.get(user_id=id)
     U=User.objects.get(id=P.user_id)
     URL='https://api.github.com/users/'+str(U.username)
-    response=requests.get(URL)
-    dict=response.json()    
+    try:
+        response=requests.get(URL)
+        dict=response.json()
+    except:
+        dict={}
+        dict['followers']=0
+    finally:
+        if (dict['message']=="Not Found"):
+            dict['followers']=0    
     P.Followers = dict['followers']
     P.last_update = datetime.now()
     P.save()
@@ -62,8 +84,14 @@ def update_repos(id):
     P=Profile.objects.get(user_id=id)
     U=User.objects.get(id=P.user_id)
     URL='https://api.github.com/users/'+str(U.username)+'/repos'
-    response=requests.get(URL)
-    dict=response.json()
+    try:
+        response=requests.get(URL)
+        dict=response.json()
+    except:
+        dict={}
+    finally:
+        if (dict['message']=="Not Found"):
+            dict=[]
     for repo in dict:
         QS=Repository.objects.filter(name=repo['name'],profile_id=id)
         if not QS:
